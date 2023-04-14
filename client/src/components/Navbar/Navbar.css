@@ -1,0 +1,11 @@
+.Navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+margin-top:15px;
+background-color: rgb(46, 161, 161);
+padding-top: 10px;
+padding-bottom: 10px;
+
+
+};
