@@ -38,27 +38,30 @@ const getApiTemp = async () => {
 
 
 const createDog = async (name, height, weight, lifeyears, temperaments) => {
-  if (!Array.isArray(temperaments)) {
-    temperaments = [temperaments];
-  }
-  const dog = await Dogs.create({ name, height, weight, lifeyears });
-  const selectedTemperaments = await Temperaments.findAll({ where: { name: temperaments } });
-  await dog.addTemperaments(selectedTemperaments);
-  // Consulta que incluye solo el atributo "name" de la tabla Temperaments
-  const dogWithTemperaments = await Dogs.findByPk(dog.id,{
-    include: {
-      model: Temperaments,
-      attributes: ['name'],
-      through: {
-        attributes: []
-      }
+  try {
+    if (!Array.isArray(temperaments)) {
+      temperaments = [temperaments];
     }
-  });
-  const consulta = dog.Temperaments.map(temp => temp.name);
-console.log(consulta)
-  return dogWithTemperaments;
+    const dog = await Dogs.create({ name, height, weight, lifeyears });
+    const selectedTemperaments = await Temperaments.findAll({ where: { name: temperaments } });
+    await dog.addTemperaments(selectedTemperaments);
+    // Consulta que incluye solo el atributo "name" de la tabla Temperaments
+    const dogWithTemperaments = await Dogs.findByPk(dog.id,{
+      include: {
+        model: Temperaments,
+        attributes: ['name'],
+        through: {
+          attributes: []
+        }
+      }
+    });
+   
+    return dogWithTemperaments;
+  } catch (error) {
+    console.error(error);
+    // Manejar la excepción de manera adecuada, por ejemplo, lanzar un error personalizado o devolver un objeto que indique que ha habido un error
+  }
 };
-
 
 const getByName = async (name) => {
     const db = await Dogs.findAll({ where: { name: name } });

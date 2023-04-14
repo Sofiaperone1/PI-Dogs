@@ -59,7 +59,7 @@ const createDogs = async (req,res) => {
     try {
         const {name, weight, height, life_span, temperaments} = req.body;
         const newDog = await createDog (name,weight,height,life_span, temperaments)
-        res.status(200).send("creado correctamente")
+        res.status(200).json(newDog)
     }
  catch (error){
 res.status(400).json({error:error.message})

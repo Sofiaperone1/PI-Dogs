@@ -62,6 +62,10 @@ function handleSortName(e) {
   setOrden(`Ordenado ${e.target.value}`)
 }
 
+function handleSortWeight() {
+  
+}
+
   return (
    <div className='main'>
     <div className='selectDiv'>
@@ -80,6 +84,11 @@ function handleSortName(e) {
  <option value="">Orden Alfabético</option>
  <option value="asc">A-Z</option>
  <option value="desc">Z-A</option>
+</select>
+<select  onChange={handleSortWeight}>
+ <option value="">Peso</option>
+ <option value="asc">Mas pesado</option>
+ <option value="desc">Menos pesado </option>
 </select>
     </div>
 

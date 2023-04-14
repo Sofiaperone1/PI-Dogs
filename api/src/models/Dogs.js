@@ -14,10 +14,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     height: {
-    type: DataTypes.INTEGER
+    type: DataTypes.JSON
     },
     weight: {
-      type:DataTypes.INTEGER
+      type:DataTypes.JSON
     },
     life_span:{
       type:DataTypes.INTEGER

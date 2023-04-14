@@ -80,9 +80,9 @@ const changeHandler = (event) => {
 const submitHandler = (event) => {
 
     event.preventDefault();
-    //axios.post("http://localhost:3001/dogs",form)
-    //.then(res => alert(res))
-    //.catch(err => alert(err))
+    axios.post("http://localhost:3001/dogs",form)
+    .then(res => alert("ok",res))
+    .catch(err => alert("err",err))
 
     setForm({...form, temperaments: selectedTemperamentos.join(", ")})
   
@@ -94,21 +94,22 @@ const submitHandler = (event) => {
 }
 
   return (
-  <form onSubmit={submitHandler}>
-  <div>
+  <form className='FormCont'onSubmit={submitHandler}>
+  <div className='formInputs' >
     <label htmlFor="">Nombre</label>
     <input type="text" value={form.name} onChange={changeHandler} name="name"/>
     <span>{errors.name}</span>
-  </div>
-  <div>
     <label htmlFor="">Altura</label>
-    <input type="text" value={form.height}  onChange={changeHandler} name="height"/></div>
-  <div>
+    <input type="text" value={form.height}  onChange={changeHandler} name="height"/>
+  
     <label htmlFor="">Peso</label>
-    <input type="text" value={form.weight}  onChange={changeHandler}name="weight"/></div>
-    <div>
+    <input type="text" value={form.weight}  onChange={changeHandler}name="weight"/>
+    
     <label htmlFor="">Años de vida</label>
-    <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/></div>
+    <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
+    <button className="form-btn" onClick={() => {
+      console.log(selectedTemperamentos)
+    }} type="submit">CREAR</button></div>
   
 <div className="containercheck">   <label>Temperamentos:</label>
     {temperaments.map((temperamento) => (
@@ -127,9 +128,7 @@ const submitHandler = (event) => {
       ))}
   
                     </div> 
-    <button onClick={() => {
-      console.log(selectedTemperamentos)
-    }} type="submit">CREAR</button>
+   
   </form>
   )
 }
