@@ -51,14 +51,15 @@ temperaments:""
 
 function validate(input){
   let errors={};
-  if(input.name){
-      setErrors({...errors, name:""})
-  } 
-  else {
-    setErrors({...errors, name:"* este campo es obligatorio"}) 
-  }
-  
-  return errors;
+    if(!input.name){
+        errors.name="Nombre requerido";
+    } if(!input.life_span){
+        errors.life_span="Resumen requerido";
+    } if(input.maxHeight > 100 ){
+        errors.maxHeight = "El Healt Score debe ser entre 0 y 100";
+    }
+    
+    return errors;
 }
 
 
@@ -73,12 +74,21 @@ const handleTemperamentoChange = (event) => {
 };
 
 
-const changeHandler = (event) => {
-  const property = event.target.name;
-  const value=event.target.value;
+const changeHandler = (e) => {
+  //const property = event.target.name;
+  //const value=event.target.value;
 
-  validate({...form, [property]: value})
-  setForm({...form, [property]: value})
+  //validate({...form, [property]: value})
+  //setForm({...form, [property]: value})
+
+setErrors(validate({
+    ...form,
+    [e.target.name]: e.target.value
+}))
+setForm({
+  ...form,
+  [e.target.name]: e.target.value
+})
 }
 
 const changeTwoHandlers = (event) => {
@@ -114,15 +124,23 @@ const submitHandler = (event) => {
     const updatedForm = {...form, weight:peso, height:altura, temperaments: selectedTemperamentos.join(", ")}
     setForm(updatedForm)
     
-    axios.post("http://localhost:3001/dogs",updatedForm)
-    .then(res => alert("ok",res))
-    .catch(err => alert("err",err))
-    
     console.log(form);
     if (form.name === "") {
-      return alert("Por favor ingrese un nombre de plato")
+      return alert("Por favor ingrese un nombre")
   }
+  if (form.life_span === "") {
+    return alert("Por favor ingrese un numero de años")
+}
+if (form.temperaments === "") {
+  return alert("Por favor ingrese temperamentos")
+}
+else {
+  axios.post("http://localhost:3001/dogs",updatedForm)
+  .then(res => alert("el formulario ah sido enviado",res))
+  .catch(err => alert("err",err))}
   
+  
+
 }
 
   return (
@@ -134,7 +152,8 @@ const submitHandler = (event) => {
       
     <label htmlFor="">AÑOS DE VIDA</label>
     <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
-
+    <span>{errors.life_span}</span>
+      
     <label htmlFor="">PESO </label>
     <div className='shortInputs' >
       min: <input type="text" onChange={changeTwoHandlers}name="minWeight"/>
