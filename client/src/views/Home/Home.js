@@ -4,7 +4,7 @@ import Footer from "../../components/Footer/Footer.js"
 import {Link} from "react-router-dom"
 import { useEffect, useState } from 'react';
 import { useDispatch , useSelector} from 'react-redux';
-import{getDogs, filterByTemp,filterByOrigin, getTemperaments, sortByName} from "../../redux/actions";
+import{getDogs, filterByTemp,filterByOrigin, getTemperaments, sortByName, sortByWeight} from "../../redux/actions";
 import "./Home.css"
 const Home = () => {
 
@@ -59,10 +59,11 @@ const Home = () => {
 function handleSortName(e) {
   e.preventDefault();
   dispatch(sortByName(e.target.value))
-  setOrden(`Ordenado ${e.target.value}`)
 }
 
-function handleSortWeight() {
+function handleSortWeight(e) {
+  e.preventDefault();
+  dispatch(sortByWeight(e.target.value))
   
 }
 
@@ -87,8 +88,8 @@ function handleSortWeight() {
 </select>
 <select  onChange={handleSortWeight}>
  <option value="">Peso</option>
- <option value="asc">Mas pesado</option>
- <option value="desc">Menos pesado </option>
+ <option value="asc">Mayor peso</option>
+ <option value="desc">Menor peso </option>
 </select>
     </div>
 

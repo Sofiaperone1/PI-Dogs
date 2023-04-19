@@ -1,4 +1,4 @@
-import {FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME, GET_BY_ID} from "./actions.js"
+import {FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
 
 const initialState = {
     dogs:[],
@@ -89,6 +89,25 @@ case SORT_BY_NAME:
                 ...state,
                 dogs: arrOrdenado
             };
+
+            case SORT_BY_WEIGHT:
+            
+                const toOrder = [];
+                console.log(action.payload)
+                state.dogs.forEach((dog) => {  
+                    const numbers = dog.weight.imperial.split(" - ").map(num => parseInt(num))
+                    const average = (numbers[0] + numbers[1]) / 2
+                    toOrder.push( {...dog, averageWeight: average})
+                })
+                let arrOrdenado2 = action.payload === "asc" ?
+                toOrder.sort((a, b) => b.averageWeight - a.averageWeight) :
+                toOrder.sort((a, b) => a.averageWeight - b.averageWeight);
+
+                return {
+                    ...state,
+                    dogs: arrOrdenado2
+                };
+            ;
 
     case GET_BY_ID:
             return {

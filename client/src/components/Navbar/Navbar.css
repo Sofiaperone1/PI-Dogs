@@ -7,5 +7,8 @@ background-color: rgb(46, 161, 161);
 padding-top: 10px;
 padding-bottom: 10px;
 
+}
 
-};
+.selected:hover{
+    color: white
+}

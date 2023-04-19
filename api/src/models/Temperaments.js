@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('Temperaments', {
     id:{
       type:DataTypes.UUID,
-      primaryKey: true,
+      primaryKey: true, 
       defaultValue: DataTypes.UUIDV4
      // no me deja usar el auto increment
     },

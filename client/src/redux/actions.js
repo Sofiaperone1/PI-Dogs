@@ -5,6 +5,7 @@ export const FILTER_BY_TEMP ="FILTER_BY_TEMP";
 export const FILTER_BY_ORIGIN ="FILTER_BY_ORIGIN";
 export const SORT_BY_NAME = "SORT_BY_NAME"
 export const GET_BY_ID = "GET_BY_ID"
+export const SORT_BY_WEIGHT="SORT_BY_WEIGHT";
 
 export const getDogs = () => {
     return async function (dispatch) {
@@ -48,6 +49,12 @@ export const filterByOrigin = (payload) => {
 export function sortByName(payload){
     return ({
         type: 'SORT_BY_NAME',
+        payload
+    })
+}
+export function sortByWeight(payload){
+    return ({
+        type: 'SORT_BY_WEIGHT',
         payload
     })
 }

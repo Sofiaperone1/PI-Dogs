@@ -18,32 +18,28 @@ const temperaments = useSelector(state => state.temperaments);
 
 const [selectedTemperamentos, setSelectedTemperamentos] = useState([]);
 
-const handleTemperamentoChange = (event) => {
-  const value = event.target.value;
+const [maxWeight, setMaxWeight] = useState("");
+const [minWeight, setMinWeight] = useState("");
+const [maxHeight, setMaxHeight] = useState("");
+const [minHeight, setMinHeight] = useState("");
 
-  if (selectedTemperamentos.includes(value)) {
-    setSelectedTemperamentos(selectedTemperamentos.filter((temperamento) => temperamento !== value));
-  } else {
-    setSelectedTemperamentos([...selectedTemperamentos, value]);
-  }
-};
 
 const peso = {
-  "imperial": "9 - 11.5",
+  "imperial": `${minWeight} - ${maxWeight}`,
   "metric": "23 - 29"
 }
 const altura = {
-  "imperial": "9 - 11.5",
+  "imperial": `${minHeight} - ${maxHeight}`,
   "metric": "23 - 29"
 }
 
 const [form,setForm] = useState({
-name:"",
-height:altura,
-weight:peso,
-life_span:"",
-temperaments:""
-})
+  name:"",
+  height:{},
+  weight:{},
+  life_span:"",
+  temperaments:""
+  })
 
 const [errors, setErrors] = useState({
 name:"",
@@ -59,17 +55,50 @@ function validate(input){
       setErrors({...errors, name:""})
   } 
   else {
-    setErrors({...errors, name:"Tiene que tener un nombre"}) 
+    setErrors({...errors, name:"* este campo es obligatorio"}) 
   }
   
-
   return errors;
 }
+
+
+const handleTemperamentoChange = (event) => {
+  const value = event.target.value;
+
+  if (selectedTemperamentos.includes(value)) {
+    setSelectedTemperamentos(selectedTemperamentos.filter((temperamento) => temperamento !== value));
+  } else {
+    setSelectedTemperamentos([...selectedTemperamentos, value]);
+  }
+};
+
+
 const changeHandler = (event) => {
   const property = event.target.name;
   const value=event.target.value;
+
   validate({...form, [property]: value})
   setForm({...form, [property]: value})
+}
+
+const changeTwoHandlers = (event) => {
+  const property = event.target.name;
+  const value=event.target.value;
+  
+if (property === "maxWeight") {
+  setMaxWeight(value)
+  console.log("soy max")
+}
+else if (property === "maxHeight") {
+  setMaxHeight(value)
+  console.log("soy max")
+}
+else if (property ==="minHeight") {
+  setMinHeight(value) 
+  console.log("soy min")
+}
+else { setMinWeight(value) 
+  console.log("soy min")}
 }
 
 // TIPEO..
@@ -77,15 +106,18 @@ const changeHandler = (event) => {
 //PIDE EL CAMBIO DE ESTADO
 //SE HACE LA VALIDACION
 //EL ESTADO CAMBIA 
+
 const submitHandler = (event) => {
 
     event.preventDefault();
-    axios.post("http://localhost:3001/dogs",form)
+
+    const updatedForm = {...form, weight:peso, height:altura, temperaments: selectedTemperamentos.join(", ")}
+    setForm(updatedForm)
+    
+    axios.post("http://localhost:3001/dogs",updatedForm)
     .then(res => alert("ok",res))
     .catch(err => alert("err",err))
-
-    setForm({...form, temperaments: selectedTemperamentos.join(", ")})
-  
+    
     console.log(form);
     if (form.name === "") {
       return alert("Por favor ingrese un nombre de plato")
@@ -95,28 +127,35 @@ const submitHandler = (event) => {
 
   return (
   <form className='FormCont'onSubmit={submitHandler}>
-  <div className='formInputs' >
-    <label htmlFor="">Nombre</label>
+  <div className='bigInputs' >
+    <label htmlFor="">NOMBRE</label>
     <input type="text" value={form.name} onChange={changeHandler} name="name"/>
     <span>{errors.name}</span>
-    <label htmlFor="">Altura</label>
-    <input type="text" value={form.height}  onChange={changeHandler} name="height"/>
-  
-    <label htmlFor="">Peso</label>
-    <input type="text" value={form.weight}  onChange={changeHandler}name="weight"/>
-    
-    <label htmlFor="">Años de vida</label>
+      
+    <label htmlFor="">AÑOS DE VIDA</label>
     <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
+
+    <label htmlFor="">PESO </label>
+    <div className='shortInputs' >
+      min: <input type="text" onChange={changeTwoHandlers}name="minWeight"/>
+      max: <input type="text" onChange={changeTwoHandlers}name="maxWeight"/>
+    </div>
+    <label htmlFor="">ALTURA</label>
+    <div className='shortInputs' >
+      min:<input type="text"  onChange={changeTwoHandlers}name="minHeight"/>
+      max:<input type="text"  onChange={changeTwoHandlers}name="maxHeight"/>
+    </div>
+
     <button className="form-btn" onClick={() => {
       console.log(selectedTemperamentos)
     }} type="submit">CREAR</button></div>
   
-<div className="containercheck">   <label>Temperamentos:</label>
+<div className="containercheck">   <label style={{color:"rgb(46, 161, 161)"}}>TEMPERAMENTOS:</label>
     {temperaments.map((temperamento) => (
         <div key={temperamento}>
           <label>
             <input
-            name={temperamento}
+              name={temperamento}
               type="checkbox"
               value={temperamento}
               checked={selectedTemperamentos.includes(temperamento)}

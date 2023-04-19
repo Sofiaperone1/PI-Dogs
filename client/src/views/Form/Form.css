@@ -1,23 +1,87 @@
 .FormCont {
     display: flex;
-    background-color: #23c48428;
+    
    align-content: center;
     
 }
 
-.formInputs {
-     display: flex; flex-direction: column; width: 20%; margin-left:20px; margin-top: 20px;
+.bigInputs {
+     display: flex; flex-direction: column; width: 19%; margin-left:1.5%; margin-top: 1%;
+     border: transparent;
+     border-radius: 7px;
+     box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.555);
+     padding-left:5px;
+     color: rgb(73, 73, 73);
+     align-items: center;
+     padding: 5px;
+
+}
+
+.bigInputs input {
+     
+     height: 22px;
+     border-radius: 10px;
+    border: 1px solid gray;
+    width: 80%;
+ 
+}
+
+.bigInputs span {
+     color: red;
+     font-size: 13px;
+     margin:4px 0 0 0;
+}
+
+.bigInputs label {
+     margin: 8% 0 4% 0;  
+     color: rgba(0, 0, 0, 0.726);
+}
+.shortInputs {
+     display: flex;
+     font-size: 14px;
+     margin-left: 1%;
+     align-items: center;
+     
+}
+.shortInputs input {
+width: 30%;
+margin-left: 2%;
+margin-right: 4%;
 }
 
 .containercheck{
-     margin-left:50px;margin-top: 20px;
-     
-}
-.form-btn {
-    margin-top: 10px;
-    
-    background-color: black;
-    color: white;
+     margin-left:2%;
+     margin-top: 1%;
+     display: flex;
+     flex-wrap: wrap;
+     flex-direction: column;
+     height: 470px;
+     padding: 5px;
+     justify-content: space-between;   
+     border: transparent;
+     border-radius: 7px;
+     box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.555);
+     width: 75%;
+     color: rgb(73, 73, 73);
 }
 
+.containercheck div,label {
+padding: 2px;
+margin: 1px 4px 1px 0px;
+}
+
+.form-btn {
+    margin-top: 20%;
+    height: 31px;
+    border-radius: 10px;
+    background-color:  rgb(46, 161, 161);
+    color: white;
+    width: 80%;
+    align-self: center;
+    border: transparent;
+}
+
+.form-btn:hover {
+     background-color: rgb(41, 129, 129);;
+}
 
