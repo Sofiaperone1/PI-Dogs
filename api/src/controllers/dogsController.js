@@ -37,12 +37,12 @@ const getApiTemp = async () => {
 }
 
 
-const createDog = async (name, height, weight, lifeyears, temperaments) => {
+const createDog = async (name, height, weight, lifeyears, temperaments, precio) => {
   try {
     if (!Array.isArray(temperaments)) {
       temperaments = [temperaments];
     }
-    const dog = await Dogs.create({ name, height, weight, lifeyears });
+    const dog = await Dogs.create({ name, height, weight, lifeyears , precio});
     const selectedTemperaments = await Temperaments.findAll({ where: { name: temperaments } });
     await dog.addTemperaments(selectedTemperaments);
     // Consulta que incluye solo el atributo "name" de la tabla Temperaments

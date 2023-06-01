@@ -1,14 +1,16 @@
-import {FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
+import {DEFINE_SELECTED_TEMPS,SEARCHBAR, FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
 
 const initialState = {
     dogs:[],
     temperaments:[],
-    dogById:{}
+    selectedTemps:[],
+    dogById:{},
+    allDogs:[]
 };
 
 const rootReducer = (state = initialState ,action) => {
 switch(action.type) {
-    case GET_DOGS:  return {...state, dogs: action.payload};
+    case GET_DOGS:  return {...state, dogs: action.payload, allDogs:action.payload};
     
     case GET_TEMPERAMENTS:  return {...state, temperaments: action.payload};
     
@@ -67,28 +69,33 @@ else {
 };
 
 case SORT_BY_NAME:
-            let arrOrdenado = action.payload === "asc" ?
-                state.dogs.sort(function (a, b) {
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return 1;
-                    }
-                    if (b.name.toLowerCase() > a.name.toLowerCase()) {
-                        return -1;
-                    }
-                    return 0;
-                }) : state.dogs.sort(function (a, b) {
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return -1;
-                    }
-                    if (b.name.toLowerCase() > a.name.toLowerCase()) {
-                        return 1;
-                    }
-                    return 0;
-                })
-            return {
-                ...state,
-                dogs: arrOrdenado
-            };
+        let dogs = [...state.dogs]; // Hacer una copia del arreglo original
+        if (action.payload === 'desc') {
+          dogs.sort(function(a, b) {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return -1;
+            }
+            if (b.name.toLowerCase() > a.name.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          });
+        } else if (action.payload === 'asc') {
+          dogs.sort(function(a, b) {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            if (b.name.toLowerCase() > a.name.toLowerCase()) {
+              return -1;
+            }
+            return 0;
+          });
+        }
+        return {
+          ...state,
+          dogs: dogs,
+        };
+
 
             case SORT_BY_WEIGHT:
             
@@ -113,7 +120,25 @@ case SORT_BY_NAME:
             return {
                 ...state,
                 dogById: action.payload
-            }
+            };
+
+    case SEARCHBAR:
+        let filter = action.payload
+        let allDogs= state.allDogs;
+        
+        const filteredDogs = allDogs.filter(dog =>
+        dog.name.toLowerCase().includes(filter.toLowerCase()))
+
+            return {
+               ...state,   
+               dogs: filteredDogs         
+                };
+
+    case DEFINE_SELECTED_TEMPS:
+      return{
+          ...state,
+          selectedTemps:action.payload
+      }
 
     default:
         return {...state}

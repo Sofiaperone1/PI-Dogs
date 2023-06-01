@@ -22,6 +22,9 @@ module.exports = (sequelize) => {
     life_span:{
       type:DataTypes.INTEGER
     },
+    precio:{
+      type:DataTypes.INTEGER
+    },
     created:{
       type: DataTypes.BOOLEAN,
       defaultValue: true

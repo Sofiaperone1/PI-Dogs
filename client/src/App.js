@@ -5,6 +5,7 @@ import Home from './views/Home/Home.js';
 import DetailCard from './views/Detail/DetailCard.js';
 import Form from './views/Form/Form.js';
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
        <Route exact path="/form" element={<Form/>}/>
 
       </Routes>
+      <Footer/>
 </div>
        
     

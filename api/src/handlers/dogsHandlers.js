@@ -57,8 +57,8 @@ const getTemperament = async (req,res) => {
 
 const createDogs = async (req,res) => {
     try {
-        const {name, weight, height, life_span, temperaments} = req.body;
-        const newDog = await createDog (name,weight,height,life_span, temperaments)
+        const {name, weight, height, life_span, temperaments, precio} = req.body;
+        const newDog = await createDog (name,weight,height,life_span, temperaments, precio)
         res.status(200).json(newDog)
     }
  catch (error){

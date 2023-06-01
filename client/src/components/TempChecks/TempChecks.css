@@ -1,0 +1,51 @@
+.TempsContainer {
+display: flex;
+flex-direction: row;
+width: 47%;
+
+}
+
+.sideText {
+    width: 12%;
+    height: 100%;
+    background-color: #85A819;
+    border-radius: 7px;
+    color: white;
+}
+
+.sideText p {
+    transform:  rotate(-90deg); 
+    margin-top: 250%;
+    font-size: 21px;
+
+
+}
+
+.tempList {
+    height: 100%;
+    width: 44%;
+    padding-top: 0;
+    margin-top: 0;
+    border: 1px solid #8080804d;
+    border-radius: 7px;
+    color: #2e2e2e;
+    box-shadow: 2px 3px 15px rgb(0 0 0 / 56%);
+}
+
+.selectedTemps {
+    width: 44%;
+    height: 100%;
+    border-radius: 7px;
+    border: 3px solid #c356f5d7;
+    padding: 0;
+  
+}
+
+.selectedTemps div {
+    margin: 3% 0% 1% 3%;
+}
+
+.selectedTemps div span {
+    margin-right: 2%;
+}
+

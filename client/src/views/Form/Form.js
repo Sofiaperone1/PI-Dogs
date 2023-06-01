@@ -4,6 +4,13 @@ import { useState , useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getTemperaments } from '../../redux/actions';
 import "./Form.css"
+import TempChecks from '../../components/TempChecks/TempChecks';
+import leftArrow from "../../imgs/leftArrow.png"
+import { Link } from "react-router-dom";
+import numero1 from "../../imgs/numero1.png"
+import numero2 from "../../imgs/numero2.png"
+import Swal from 'sweetalert2'
+
 const Form = () => {
 
   const dispatch = useDispatch();
@@ -14,9 +21,7 @@ const Form = () => {
     
   }, [dispatch]);
 
-const temperaments = useSelector(state => state.temperaments);
-
-const [selectedTemperamentos, setSelectedTemperamentos] = useState([]);
+const selectedTemps = useSelector(state => state.selectedTemps);
 
 const [maxWeight, setMaxWeight] = useState("");
 const [minWeight, setMinWeight] = useState("");
@@ -33,13 +38,16 @@ const altura = {
   "metric": "23 - 29"
 }
 
+
 const [form,setForm] = useState({
   name:"",
   height:{},
   weight:{},
   life_span:"",
-  temperaments:""
+  temperaments:"",
   })
+
+ 
 
 const [errors, setErrors] = useState({
 name:"",
@@ -52,9 +60,9 @@ temperaments:""
 function validate(input){
   let errors={};
     if(!input.name){
-        errors.name="Nombre requerido";
+        errors.name="Required name";
     } if(!input.life_span){
-        errors.life_span="Resumen requerido";
+        errors.life_span="Required life span";
     } if(input.maxHeight > 100 ){
         errors.maxHeight = "El Healt Score debe ser entre 0 y 100";
     }
@@ -62,16 +70,6 @@ function validate(input){
     return errors;
 }
 
-
-const handleTemperamentoChange = (event) => {
-  const value = event.target.value;
-
-  if (selectedTemperamentos.includes(value)) {
-    setSelectedTemperamentos(selectedTemperamentos.filter((temperamento) => temperamento !== value));
-  } else {
-    setSelectedTemperamentos([...selectedTemperamentos, value]);
-  }
-};
 
 
 const changeHandler = (e) => {
@@ -117,76 +115,111 @@ else { setMinWeight(value)
 //SE HACE LA VALIDACION
 //EL ESTADO CAMBIA 
 
+useEffect(() => {
+  const finalTemps = selectedTemps.join(", ");
+  const updatedForm = { ...form, temperaments: finalTemps };
+  setForm(updatedForm);
+}, [selectedTemps]);
+
 const submitHandler = (event) => {
 
     event.preventDefault();
+    
+    if (form.name === "") {
+      return Swal.fire('Por favor ingrese un nombre')
+    }
+    if (form.life_span === "") {
+      return Swal.fire('Por favor ingrese un numero de años')
+  }
+    if (selectedTemps.length == 0) {
+    return Swal.fire('Por favor ingrese temperamentos')
+ 
+    }
 
-    const updatedForm = {...form, weight:peso, height:altura, temperaments: selectedTemperamentos.join(", ")}
+    const finalTemps = selectedTemps.join(", ") 
+    console.log("final",finalTemps)  
+
+    const updatedForm = {...form, weight:peso, height:altura, temperaments:finalTemps}
+
     setForm(updatedForm)
     
     console.log(form);
-    if (form.name === "") {
-      return alert("Por favor ingrese un nombre")
-  }
-  if (form.life_span === "") {
-    return alert("Por favor ingrese un numero de años")
-}
-if (form.temperaments === "") {
-  return alert("Por favor ingrese temperamentos")
-}
-else {
+
   axios.post("http://localhost:3001/dogs",updatedForm)
-  .then(res => alert("el formulario ah sido enviado",res))
-  .catch(err => alert("err",err))}
-  
+  .then(res => Swal.fire( 
+    'The Internet?',
+    'That thing is still around?',
+    'succes'))
+  .catch(err => Swal.fire({
+    icon: 'error',
+    title: 'Hubo un error',
+    text: 'Porfavor intenta nuevamente mas tarde!'
+  }))
   
 
 }
 
   return (
   <form className='FormCont'onSubmit={submitHandler}>
-  <div className='bigInputs' >
-    <label htmlFor="">NOMBRE</label>
-    <input type="text" value={form.name} onChange={changeHandler} name="name"/>
-    <span>{errors.name}</span>
-      
-    <label htmlFor="">AÑOS DE VIDA</label>
-    <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
-    <span>{errors.life_span}</span>
-      
-    <label htmlFor="">PESO </label>
-    <div className='shortInputs' >
-      min: <input type="text" onChange={changeTwoHandlers}name="minWeight"/>
-      max: <input type="text" onChange={changeTwoHandlers}name="maxWeight"/>
-    </div>
-    <label htmlFor="">ALTURA</label>
-    <div className='shortInputs' >
-      min:<input type="text"  onChange={changeTwoHandlers}name="minHeight"/>
-      max:<input type="text"  onChange={changeTwoHandlers}name="maxHeight"/>
+
+    <div className='returnBtnForm'>
+    <Link to={`/home`}><button> <img src={leftArrow}/> GO BACK</button></Link> 
     </div>
 
-    <button className="form-btn" onClick={() => {
-      console.log(selectedTemperamentos)
-    }} type="submit">CREAR</button></div>
-  
-<div className="containercheck">   <label style={{color:"rgb(46, 161, 161)"}}>TEMPERAMENTOS:</label>
-    {temperaments.map((temperamento) => (
-        <div key={temperamento}>
-          <label>
-            <input
-              name={temperamento}
-              type="checkbox"
-              value={temperamento}
-              checked={selectedTemperamentos.includes(temperamento)}
-              onChange={handleTemperamentoChange}
-            />
-            {temperamento}
-          </label>
+    <div className='separator'>
+    <div className='formCard'>
+
+        <div className='form'>
+
+              <div className='f1'>
+                  <img src={numero1} alt="" />
+                  <p>Complete the form</p>
+              </div>
+
+              <div className='f2'>
+                  <div className='name'>
+                      <label htmlFor="">Name : </label>
+                      <input type="text" value={form.name} onChange={changeHandler} name="name"/>
+                      <span style={{color:"red"}}>{errors.name}</span>
+                  </div>
+                  <div className='lifeSpan'>
+                  <label htmlFor="">Life span :</label>
+                      <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
+                      <span style={{color:"red"}}>{errors.life_span}</span>
+                 
+                  </div>
+
+                  <div>
+                      <div className='weight'>
+                          <label htmlFor="">Weight :</label>
+                          <input  type="text"placeholder='min' onChange={changeTwoHandlers}name="minWeight"/>
+                          <span>-</span>
+                          <input type="text" placeholder='max'onChange={changeTwoHandlers}name="maxWeight"/>
+                      </div>
+                      <div className='height'>
+
+                          <label htmlFor="">Height :</label>
+                          <input type="text" placeholder='min' onChange={changeTwoHandlers}name="minHeight"/>
+                          <span>-</span>
+                          <input type="text"  placeholder='max' onChange={changeTwoHandlers}name="maxHeight"/>
+                      </div>
+                    </div>
+              </div>
+
+              <div className='f3'>
+                <img src={numero2} alt="" />
+                <p>Select a temperament</p>
+              </div>
+
+        
         </div>
-      ))}
-  
-                    </div> 
-   
+
+        <button className="form-btn" onClick={() => {
+                }} type="submit">CREATE YOUR DOG</button>
+
+    </div>
+    <TempChecks/>
+    </div>
   </form>
   )
 }

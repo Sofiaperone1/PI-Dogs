@@ -6,6 +6,8 @@ export const FILTER_BY_ORIGIN ="FILTER_BY_ORIGIN";
 export const SORT_BY_NAME = "SORT_BY_NAME"
 export const GET_BY_ID = "GET_BY_ID"
 export const SORT_BY_WEIGHT="SORT_BY_WEIGHT";
+export const SEARCHBAR = "SEARCHBAR"
+export const DEFINE_SELECTED_TEMPS = 'DEFINE_SELECTED_TEMPS'
 
 export const getDogs = () => {
     return async function (dispatch) {
@@ -30,6 +32,13 @@ export const getById = (id) => {
         dispatch({type: GET_BY_ID, payload:response.data});
    
    }
+}
+
+export const searchbar = (payload) => {
+    return ({
+        type: 'SEARCHBAR',
+        payload
+    })
 }
 
 export const filterByTemp = (payload) => {
@@ -59,7 +68,12 @@ export function sortByWeight(payload){
     })
 }
 
-
+export function defineSelectedTemps(payload){
+    return ({
+        type: 'DEFINE_SELECTED_TEMPS',
+        payload
+    })
+}
 
 /* 
 export const getUsers = () => {

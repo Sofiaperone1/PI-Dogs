@@ -1,11 +1,12 @@
 import React from 'react'
 import Card from '../../components/Cards/Card'
 import Footer from "../../components/Footer/Footer.js"
-import {Link} from "react-router-dom"
 import { useEffect, useState } from 'react';
 import { useDispatch , useSelector} from 'react-redux';
 import{getDogs, filterByTemp,filterByOrigin, getTemperaments, sortByName, sortByWeight} from "../../redux/actions";
 import "./Home.css"
+import SearchBar from '../../components/Searchbar/Searchbar';
+
 const Home = () => {
 
   const dispatch = useDispatch();
@@ -23,9 +24,8 @@ const Home = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [orden, setOrden] = useState('')
 
-  
+
   // PAGINADO
   
   const pageSize = 8;
@@ -67,29 +67,31 @@ function handleSortWeight(e) {
   
 }
 
+
   return (
    <div className='main'>
     <div className='selectDiv'>
+    <SearchBar/>
     <select  onChange={handleFilterTemp}>
-  <option value="Todos">Filtrar por temperamento</option>
+  <option value="Todos">Filter by temp</option>
   {temperaments.map((temperamento) => (
     <option key={temperamento} value={temperamento}>{temperamento}</option>
   ))}
 </select>
 <select  onChange={handleFilterOrigin}>
-  <option value="Todos">Filtrar por origen</option>
-  <option value="Bases de datos">Base de datos</option>
-  <option value="Api Dogs">Api Dogs</option>
+  <option value="Todos">Filter by origin</option>
+  <option value="Bases de datos">Database</option>
+  <option value="Api Dogs">Dogs Api</option>
 </select>
 <select  onChange={handleSortName}>
- <option value="">Orden Alfabético</option>
+ <option value="">Sort alphabetically</option>
  <option value="asc">A-Z</option>
  <option value="desc">Z-A</option>
 </select>
 <select  onChange={handleSortWeight}>
- <option value="">Peso</option>
- <option value="asc">Mayor peso</option>
- <option value="desc">Menor peso </option>
+ <option value="">Sort by weight</option>
+ <option value="asc">higher weight</option>
+ <option value="desc">lower weight</option>
 </select>
     </div>
 
@@ -110,7 +112,7 @@ function handleSortWeight(e) {
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
         >
-          Anterior
+          Prev
         </button>
         {pages.map((page) => (
           <button
@@ -127,11 +129,10 @@ function handleSortWeight(e) {
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
         >
-          Siguiente
+          Next
         </button>
       </div>
     </div>
-    <Footer/>
     </div>
   )
 }
