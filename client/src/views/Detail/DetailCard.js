@@ -6,7 +6,7 @@ import "./DetailCard.css"
 import { getById } from '../../redux/actions';
 import leftArrow from "../../imgs/leftArrow.png"
 import ClipLoader from "react-spinners/ClipLoader";
-
+import Footer from '../../components/Footer/Footer';
 
 function DetailCard() {
 
@@ -47,7 +47,7 @@ function DetailCard() {
              </div>
          </div>)
              }
-
+            <Footer/>
             </div>
         );
     }  

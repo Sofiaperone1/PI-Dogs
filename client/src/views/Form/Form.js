@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import numero1 from "../../imgs/numero1.png"
 import numero2 from "../../imgs/numero2.png"
 import Swal from 'sweetalert2'
+import Footer from '../../components/Footer/Footer';
 
 const Form = () => {
 
@@ -31,11 +32,11 @@ const [minHeight, setMinHeight] = useState("");
 
 const peso = {
   "imperial": `${minWeight} - ${maxWeight}`,
-  "metric": "23 - 29"
+  "metric": " 0 - 0 "
 }
 const altura = {
   "imperial": `${minHeight} - ${maxHeight}`,
-  "metric": "23 - 29"
+  "metric": "0  - 0"
 }
 
 
@@ -59,25 +60,42 @@ temperaments:""
 
 function validate(input){
   let errors={};
-    if(!input.name){
-        errors.name="Required name";
-    } if(!input.life_span){
-        errors.life_span="Required life span";
-    } if(input.maxHeight > 100 ){
-        errors.maxHeight = "El Healt Score debe ser entre 0 y 100";
+    if(input.name.length >= 1 && input.name.length <= 2){
+        errors.name="Name must be longer";
+    } 
+    if(input.name.length > 30){
+      errors.name="Name must be shorter";
+  } 
+
+  if (input.life_span && input.life_span < 10 ) {
+    errors.life_span = "Must be a number between 10 and 60";
+}
+  if (input.life_span > 60 ) {
+    errors.life_span = "Must be a number between 10 and 60";
+}
+  if(input.maxHeight && input.maxHeight > 100 ){
+        errors.maxHeight = "Must be smaller than 100";
+        console.log(errors.maxHeight)
     }
-    
+    if(input.minHeight && input.minHeight < 10 ){
+      errors.maxHeight = "Must be taller than 10";
+      console.log(errors.minHeight)
+  }
+  if(input.maxWeight && input.maxWeight > 100 ){
+    errors.maxHeight = "Must be lighter 100";
+    console.log(errors.maxHeight)
+}
+if(input.minWeight && input.minWeight < 3 ){
+  errors.maxHeight = "Must be heavier than 1";
+  console.log(errors.minHeight)
+}
+
     return errors;
 }
 
 
 
 const changeHandler = (e) => {
-  //const property = event.target.name;
-  //const value=event.target.value;
-
-  //validate({...form, [property]: value})
-  //setForm({...form, [property]: value})
 
 setErrors(validate({
     ...form,
@@ -89,24 +107,34 @@ setForm({
 })
 }
 
-const changeTwoHandlers = (event) => {
-  const property = event.target.name;
-  const value=event.target.value;
+const changeTwoHandlers = (e) => {
+  const property = e.target.name;
+  const value=e.target.value;
   
 if (property === "maxWeight") {
   setMaxWeight(value)
-  console.log("soy max")
+  console.log("soy max weight")
 }
 else if (property === "maxHeight") {
   setMaxHeight(value)
-  console.log("soy max")
+  console.log("soy max height")
 }
 else if (property ==="minHeight") {
   setMinHeight(value) 
-  console.log("soy min")
+  console.log("soy min height")
 }
 else { setMinWeight(value) 
-  console.log("soy min")}
+  console.log("soy min weight")}
+
+  setErrors(validate({
+    ...form,
+    [e.target.name]: e.target.value
+}))
+setForm({
+  ...form,
+  [e.target.name]: e.target.value
+})
+
 }
 
 // TIPEO..
@@ -126,15 +154,20 @@ const submitHandler = (event) => {
     event.preventDefault();
     
     if (form.name === "") {
-      return Swal.fire('Por favor ingrese un nombre')
+      return Swal.fire('Please enter a name')
     }
     if (form.life_span === "") {
-      return Swal.fire('Por favor ingrese un numero de años')
+      return Swal.fire('Please enter a number of lifespan')
   }
     if (selectedTemps.length == 0) {
-    return Swal.fire('Por favor ingrese temperamentos')
- 
+    return Swal.fire('Please enter temperaments')
     }
+    if (form.weight === "") {
+      return Swal.fire('Please enter weight')
+      }
+   if (form.height === "") {
+        return Swal.fire('Please enter height')
+        }
 
     const finalTemps = selectedTemps.join(", ") 
     console.log("final",finalTemps)  
@@ -146,14 +179,14 @@ const submitHandler = (event) => {
     console.log(form);
 
   axios.post("http://localhost:3001/dogs",updatedForm)
-  .then(res => Swal.fire( 
-    'The Internet?',
-    'That thing is still around?',
-    'succes'))
+  .then(res => Swal.fire({ 
+    icon: 'success',
+    title: 'Congratulations',
+    text: 'You have created a new dog!'}))
   .catch(err => Swal.fire({
     icon: 'error',
-    title: 'Hubo un error',
-    text: 'Porfavor intenta nuevamente mas tarde!'
+    title: 'Error',
+    text: 'Please try again later!'
   }))
   
 
@@ -184,7 +217,7 @@ const submitHandler = (event) => {
                   </div>
                   <div className='lifeSpan'>
                   <label htmlFor="">Life span :</label>
-                      <input type="text" value={form.life_span}  onChange={changeHandler}name="life_span"/>
+                      <input type="number" value={form.life_span}  onChange={changeHandler}name="life_span"/>
                       <span style={{color:"red"}}>{errors.life_span}</span>
                  
                   </div>
@@ -192,16 +225,20 @@ const submitHandler = (event) => {
                   <div>
                       <div className='weight'>
                           <label htmlFor="">Weight :</label>
-                          <input  type="text"placeholder='min' onChange={changeTwoHandlers}name="minWeight"/>
+                          <input  type="number"placeholder='min' onChange={changeTwoHandlers}name="minWeight"/>
+                          <span style={{color:"red"}}>{errors.minWeight}</span>
                           <span>-</span>
-                          <input type="text" placeholder='max'onChange={changeTwoHandlers}name="maxWeight"/>
+                          <input type="number" placeholder='max'onChange={changeTwoHandlers}name="maxWeight"/>
+                          <span style={{color:"red"}}>{errors.maxWeight}</span>
                       </div>
                       <div className='height'>
 
                           <label htmlFor="">Height :</label>
-                          <input type="text" placeholder='min' onChange={changeTwoHandlers}name="minHeight"/>
+                          <input type="number" placeholder='min' onChange={changeTwoHandlers}name="minHeight"/>
+                          <span style={{color:"red"}}>{errors.minHeight}</span>
                           <span>-</span>
-                          <input type="text"  placeholder='max' onChange={changeTwoHandlers}name="maxHeight"/>
+                          <input type="number"  placeholder='max' onChange={changeTwoHandlers}name="maxHeight"/>
+                          <span style={{color:"red"}}>{errors.maxHeight}</span>
                       </div>
                     </div>
               </div>
@@ -220,6 +257,7 @@ const submitHandler = (event) => {
     </div>
     <TempChecks/>
     </div>
+  <Footer/>
   </form>
   )
 }

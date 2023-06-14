@@ -21,7 +21,7 @@ function App() {
        <Route exact path="/form" element={<Form/>}/>
 
       </Routes>
-      <Footer/>
+      
 </div>
        
     

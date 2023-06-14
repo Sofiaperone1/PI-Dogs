@@ -6,17 +6,14 @@ import { useDispatch , useSelector} from 'react-redux';
 import{getDogs, filterByTemp,filterByOrigin, getTemperaments, sortByName, sortByWeight} from "../../redux/actions";
 import "./Home.css"
 import SearchBar from '../../components/Searchbar/Searchbar';
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 const Home = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getDogs());
-    dispatch(getTemperaments());
-  
-    
-  }, [dispatch]);
+  const [loading, setLoading] = useState(true);
 
   const dogs = useSelector(state => state.dogs);
   
@@ -24,6 +21,17 @@ const Home = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+    
+  useEffect(() => {
+    setLoading(true); // Establece el estado de carga en true antes de realizar la solicitud
+    dispatch(getDogs());
+    dispatch(getTemperaments())
+    .then(() => {
+      setLoading(false); // Establece el estado de carga en false cuando la solicitud se completa
+  });
+  
+    
+  }, [dispatch]);
 
 
   // PAGINADO
@@ -94,8 +102,8 @@ function handleSortWeight(e) {
  <option value="desc">lower weight</option>
 </select>
     </div>
-
-    <div className='cardContainer'>
+    { loading ?  ( <div className='homeLoader'><ClipLoader color="#c487f4" size="80px" /> </div> ) :
+    (<div className='cardContainer'>
       {currentCards.map((dog) => (
         <Card  
         key={dog.id}
@@ -105,8 +113,9 @@ function handleSortWeight(e) {
         life_span={dog.life_span}
         weight={dog.weight}
         image={dog.image} />
-      ))}
-      <div>
+      ))}  
+    </div>) }
+    <div className='paginado'>
         <button
           className='btnPaginado'
           disabled={currentPage === 1}
@@ -132,7 +141,7 @@ function handleSortWeight(e) {
           Next
         </button>
       </div>
-    </div>
+      <Footer/>
     </div>
   )
 }

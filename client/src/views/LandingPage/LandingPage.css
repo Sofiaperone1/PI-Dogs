@@ -1,9 +1,20 @@
-.landingbackground {
-    background-image: url('../../imgs/fondo.jpg');
-    background-size: cover;
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 
+.landingbackground {
+    background-image: url('../../imgs/dog2.jpg');
+    background-size:cover
+    ;height: 100%;
+}
+.contlanding img {
+    width: 7%;
 }
 
+.contlanding p{
+    color: rgba(255, 255, 255, 0.829);
+    font-size: 50px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 2%;
+}
 .contlanding {
     display: flex;
     background: rgba(255, 255, 255, 0.11);
@@ -13,27 +24,49 @@
     border: 1px solid rgba(255, 255, 255, 0.24);
     height: 99vh;
     align-items: center;
-    justify-content: center;
+    font-weight: 500;
+    justify-content: flex-start;
     flex-direction: column;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: rgba(255, 255, 255, 0.76);
 }
+
+.contlanding a {
+    width: 20%;
+}
+
+.enterbutton2{
+    padding: 0.4em 1.4em;
+    font-size: 18px;
+    background-color: #7c0c8c;
+    color: #e0ced5;
+    border: 3px solid rgba(255, 255, 255, 0.829);
+    
+    width: 100%;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+ 
+    
+} 
+
+
 
 .enterbutton {
     color: #090909;
     padding: 0.7em 1.7em;
     font-size: 18px;
     border-radius: 0.5em;
-    border: 1px solid gray;
+    border: 1px solid rgb(67, 173, 25);
     background: #e8e8e82c;
     border: transparent;
     transition: all .3s;
     box-shadow: 3px 3px 12px #c5c5c5
 }
 
-.enterbutton:hover {
-    border: 1px solid rgba(227, 240, 234, 0.664);
-    color: rgba(255, 255, 255, 0.596);
+.enterbutton2:hover {
+  background-color:rgba(255, 255, 255, 0.151);
+  color: white;
+  border: 5px solid #7c0c8c
 }
 
 .enterbutton:active {

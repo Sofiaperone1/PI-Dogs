@@ -38,7 +38,7 @@
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 rgba(0, 0, 0, 0.568); /* Desplazamiento y color del borde */
 }
 .returnBtn img {
-    width: 17%;
+    width: 15%;
     margin-right: 5%;
 }
 
