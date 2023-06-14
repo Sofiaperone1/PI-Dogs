@@ -20,6 +20,7 @@
 const server = require('./src/app.js');
 const { sequelize } = require('./src/db.js');
 
+
 // Syncing all the models at once.
 sequelize.sync({ force: true }).then(() => {
   server.listen(3001, () => {
