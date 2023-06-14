@@ -19,7 +19,12 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { sequelize } = require('./src/db.js');
+const cors = require('cors');
 
+// Configurar los encabezados CORS
+server.use(cors({
+  origin: 'https://pi-dogs-front-ruby.vercel.app'
+}));
 
 // Syncing all the models at once.
 sequelize.sync({ force: true }).then(() => {
