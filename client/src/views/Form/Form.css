@@ -1,0 +1,135 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+.FormCont {
+     display: flex;
+     flex-direction: column;
+     
+}
+
+.returnBtnForm {
+     display: flex;
+     margin-left: 1%;
+     margin-bottom: 2%;
+     margin-top: 2%;
+     align-self: flex-start;
+     width: 20%;
+}
+
+.returnBtnForm button:hover{
+     background-color: #b4db3f;
+}
+
+.returnBtnForm img {
+     width: 17%;
+     margin-right: 5%;
+ }
+
+ .returnBtnForm a {
+     text-decoration: none;
+     width: 100%;
+ 
+ }
+ .returnBtnForm button {
+     font-family: 'Acme', sans-serif;
+     font-size: 25px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 7px;
+     color: white;
+     padding-right: 5%;
+     border: 1px solid #4c543d5e;
+     background-color: #85A819;
+     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 rgba(0, 0, 0, 0.568); 
+ }
+
+ 
+ .separator {
+     display: flex;
+     flex-direction: row;
+     height: 50vh;
+     /*background-color: rebeccapurple; */
+     justify-content: center;
+     margin-bottom: 6%;
+     
+     
+ }
+
+ .formCard {
+     width: 43%;
+     height: 100%;
+     margin-right: 1%;
+     display: flex;
+     flex-direction: column;
+     border: transparent;
+     border-radius: 7px;
+     box-shadow: 2px 3px 15px rgb(0 0 0 / 56%);
+     color: rgb(73, 73, 73);
+ }
+
+ .form {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     height: 70%;
+     padding: 3%;
+ }
+
+.form label {
+margin-right: 1%;
+}
+
+.form span {
+     margin-left: 1%;
+     margin-right: 1%;
+}
+.form input {
+     width: 20%;
+}
+
+.f1, .f3 {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     font-size: 19px;
+     color: black;
+}
+
+ .f1 img,.f3 img {
+     width: 4%;
+     height: 38%;
+     margin-right:1%;
+     
+ }
+
+ .f2 {
+     display: flex;
+     flex-direction: column;
+     padding-left: 6%;
+ }
+
+
+ .weight, .height , .name, .lifeSpan{
+     display: flex;
+     flex-direction: row;
+     align-content: center;
+     margin-bottom: 1%;
+ }
+
+ .form-btn {
+     height: 30px;
+     width: 50%;
+     align-self: center;
+     
+    border-radius: 10px;
+    border: 2px solid #85A819;
+    color: #85A819;
+    font-size: 18px;
+    font-weight: 700;
+ }
+
+ .form-btn:hover {
+     background-color:#85A819;
+     color: white;
+}
