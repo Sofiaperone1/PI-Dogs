@@ -7,13 +7,14 @@ import{getDogs, filterByTemp,filterByOrigin, getTemperaments, sortByName, sortBy
 import "./Home.css"
 import SearchBar from '../../components/Searchbar/Searchbar';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import perros from "../../dogs"
+import temperamentos from "../../temperaments"
 
 const Home = () => {
 
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const dogs = useSelector(state => state.dogs);
   
@@ -22,7 +23,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
     
-  useEffect(() => {
+  /*useEffect(() => {
     setLoading(true); // Establece el estado de carga en true antes de realizar la solicitud
     dispatch(getDogs());
     dispatch(getTemperaments())
@@ -31,7 +32,7 @@ const Home = () => {
   });
   
     
-  }, [dispatch]);
+  }, [dispatch]); */
 
 
   // PAGINADO
@@ -55,12 +56,12 @@ const Home = () => {
 
 
   async function handleFilterTemp(e) {
-      await dispatch(getDogs());
+    //  await dispatch(getDogs());
       dispatch(filterByTemp(e.target.value))   
   }
 
   async function handleFilterOrigin(e) {
-    await dispatch(getDogs());
+   // await dispatch(getDogs());
     dispatch(filterByOrigin(e.target.value))   
 }
 

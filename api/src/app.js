@@ -33,6 +33,7 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.status(status).send(message);
 });
 
+
 // Habilitar CORS
 server.use(cors());
 

@@ -8,6 +8,7 @@ export const GET_BY_ID = "GET_BY_ID"
 export const SORT_BY_WEIGHT="SORT_BY_WEIGHT";
 export const SEARCHBAR = "SEARCHBAR"
 export const DEFINE_SELECTED_TEMPS = 'DEFINE_SELECTED_TEMPS'
+export const HARCODED_FORM =  'HARCODED_FORM';
 
 export const getDogs = () => {
     return async function (dispatch) {
@@ -53,6 +54,14 @@ export const filterByOrigin = (payload) => {
         payload
     })
 }
+export const harcodedForm = (payload) => {
+    return ({
+        type: 'HARCODED_FORM',
+        payload
+    })
+}
+
+
 
 
 export function sortByName(payload){

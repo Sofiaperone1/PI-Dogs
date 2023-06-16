@@ -1,11 +1,22 @@
-import {DEFINE_SELECTED_TEMPS,SEARCHBAR, FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
-
+import {HARCODED_FORM,DEFINE_SELECTED_TEMPS,SEARCHBAR, FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
+import perros from "../dogs.js";
+import temperamentos from "../temperaments.js";
+/*
 const initialState = {
     dogs:[],
     temperaments:[],
     selectedTemps:[],
     dogById:{},
     allDogs:[]
+};*/
+
+
+const initialState = {
+  dogs:perros,
+  temperaments:temperamentos,
+  selectedTemps:[],
+  dogById:{},
+  allDogs:perros,
 };
 
 const rootReducer = (state = initialState ,action) => {
@@ -14,8 +25,16 @@ switch(action.type) {
     
     case GET_TEMPERAMENTS:  return {...state, temperaments: action.payload};
     
+    case HARCODED_FORM: 
+    const prevForm = state.allDogs
+    prevForm.push(action.payload)
+    return {
+      ...state,
+      dogs: prevForm
+    }
+
     case FILTER_BY_TEMP:    
-    const result = state.dogs;
+    const result = state.allDogs;
     if (action.payload === "Todos") {
         console.log(action.payload)
         return {
@@ -38,8 +57,8 @@ switch(action.type) {
 };
 
 case FILTER_BY_ORIGIN:  
-const resultOrigin = state.dogs;
-
+/*const resultOrigin = state.dogs;
+console.log(resultOrigin)
 if (action.payload === "Todos") {
     console.log(action.payload)
     return {
@@ -66,7 +85,7 @@ else {
         }       
     })
     return {...state, dogs: filteredApiDogs};
-};
+};*/
 
 case SORT_BY_NAME:
         let dogs = [...state.dogs]; // Hacer una copia del arreglo original
@@ -100,6 +119,7 @@ case SORT_BY_NAME:
             case SORT_BY_WEIGHT:
             
                 const toOrder = [];
+                
                 console.log(action.payload)
                 state.dogs.forEach((dog) => {  
                     const numbers = dog.weight.imperial.split(" - ").map(num => parseInt(num))

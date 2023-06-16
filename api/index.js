@@ -20,12 +20,8 @@
 const server = require('./src/app.js');
 const { sequelize } = require('./src/db.js');
 
-server.use(
-  cors({
-    origin: ["http://localhost:3000", "https://pi-dogs-front-ruby.vercel.app"],
-    credentials: true,
-  })
-);
+
+
 // Syncing all the models at once.
 sequelize.sync({ force: true }).then(() => {
   server.listen(3001, () => {

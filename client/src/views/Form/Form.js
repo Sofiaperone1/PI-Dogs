@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useState , useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getTemperaments } from '../../redux/actions';
+import { getTemperaments, harcodedForm } from '../../redux/actions';
 import "./Form.css"
 import TempChecks from '../../components/TempChecks/TempChecks';
 import leftArrow from "../../imgs/leftArrow.png"
@@ -31,8 +31,11 @@ const [minHeight, setMinHeight] = useState("");
 
 
 const peso = {
-  "imperial": `${minWeight} - ${maxWeight}`,
-  "metric": " 0 - 0 "
+  imperial: `${minWeight} - ${maxWeight}`,
+  metric: " 0 - 0 "
+}
+const image = {
+  url: "https://img.freepik.com/vector-gratis/lindo-perro-sacando-lengua-ilustracion-icono-dibujos-animados_138676-2709.jpg?w=2000"
 }
 const altura = {
   "imperial": `${minHeight} - ${maxHeight}`,
@@ -172,11 +175,12 @@ const submitHandler = (event) => {
     const finalTemps = selectedTemps.join(", ") 
     console.log("final",finalTemps)  
 
-    const updatedForm = {...form, weight:peso, height:altura, temperaments:finalTemps}
 
-    setForm(updatedForm)
+    const updatedForm = {...form, weight:peso.imperial, height:altura, temperaments:finalTemps, image:image}
     
-    console.log(form);
+    setForm(updatedForm)
+    dispatch(harcodedForm(updatedForm));
+    console.log(updatedForm);
 
   axios.post("http://localhost:3001/dogs",updatedForm)
   .then(res => Swal.fire({ 
