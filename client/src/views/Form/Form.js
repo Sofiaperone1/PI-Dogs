@@ -38,8 +38,8 @@ const image = {
   url: "https://img.freepik.com/vector-gratis/lindo-perro-sacando-lengua-ilustracion-icono-dibujos-animados_138676-2709.jpg?w=2000"
 }
 const altura = {
-  "imperial": `${minHeight} - ${maxHeight}`,
-  "metric": "0  - 0"
+  imperial: `${minHeight} - ${maxHeight}`,
+  metric: "0  - 0"
 }
 
 
@@ -176,12 +176,12 @@ const submitHandler = (event) => {
     console.log("final",finalTemps)  
 
 
-    const updatedForm = {...form, weight:peso.imperial, height:altura, temperaments:finalTemps, image:image}
+    const updatedForm = {...form, weight:peso, height:altura, temperaments:finalTemps, image:image}
     
     setForm(updatedForm)
     dispatch(harcodedForm(updatedForm));
     console.log(updatedForm);
-
+/*
   axios.post("http://localhost:3001/dogs",updatedForm)
   .then(res => Swal.fire({ 
     icon: 'success',
@@ -191,7 +191,7 @@ const submitHandler = (event) => {
     icon: 'error',
     title: 'Error',
     text: 'Please try again later!'
-  }))
+  })) */
   
 
 }
