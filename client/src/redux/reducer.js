@@ -1,4 +1,4 @@
-import {HARCODED_FORM,DEFINE_SELECTED_TEMPS,SEARCHBAR, FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
+import {FILL_DOGS,HARCODED_FORM,DEFINE_SELECTED_TEMPS,SEARCHBAR, FILTER_BY_ORIGIN, FILTER_BY_TEMP, GET_DOGS, GET_TEMPERAMENTS, SORT_BY_NAME,SORT_BY_WEIGHT, GET_BY_ID} from "./actions.js"
 import perros from "../dogs.js";
 import temperamentos from "../temperaments.js";
 /*
@@ -32,7 +32,11 @@ switch(action.type) {
       ...state,
       dogs: prevForm
     }
-
+    case FILL_DOGS: 
+    return {
+      ...state,
+      dogs: perros
+    }
     case FILTER_BY_TEMP:    
     const result = state.allDogs;
     if (action.payload === "Todos") {
@@ -137,13 +141,16 @@ case SORT_BY_NAME:
             ;
 
     case GET_BY_ID:
+      const toFilter = state.allDogs
+      const nameEncontrado = toFilter.find(objeto => objeto.id === action.payload);
+      console.log(nameEncontrado)
             return {
                 ...state,
-                dogById: action.payload
+                dogById: nameEncontrado
             };
 
     case SEARCHBAR:
-        let filter = action.payload
+        let filter = action.payloadaction.payload
         let allDogs= state.allDogs;
         
         const filteredDogs = allDogs.filter(dog =>

@@ -9,6 +9,7 @@ export const SORT_BY_WEIGHT="SORT_BY_WEIGHT";
 export const SEARCHBAR = "SEARCHBAR"
 export const DEFINE_SELECTED_TEMPS = 'DEFINE_SELECTED_TEMPS'
 export const HARCODED_FORM =  'HARCODED_FORM';
+export const FILL_DOGS = "FILL_DOGS"
 
 export const getDogs = () => {
     return async function (dispatch) {
@@ -27,12 +28,17 @@ export const getTemperaments = () => {
    }
 }
 ;
-export const getById = (id) => {
-    return async function (dispatch) {
+export const getById = (payload) => {
+  /*  return async function (dispatch) {
         const response = await axios.get(`http://localhost:3001/dogs/${id}`);
         dispatch({type: GET_BY_ID, payload:response.data});
    
-   }
+   }*/
+   return ({
+    type: 'GET_BY_ID',
+    payload
+})
+
 }
 
 export const searchbar = (payload) => {
@@ -54,6 +60,8 @@ export const filterByOrigin = (payload) => {
         payload
     })
 }
+
+// ------------- AGREGADOS PARA HARCODEAR
 export const harcodedForm = (payload) => {
     return ({
         type: 'HARCODED_FORM',
@@ -61,6 +69,12 @@ export const harcodedForm = (payload) => {
     })
 }
 
+export const fillDogs = (payload) => {
+    return ({
+        type: 'FILL_DOGS',
+        payload
+    })
+}
 
 
 

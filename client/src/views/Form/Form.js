@@ -181,6 +181,10 @@ const submitHandler = (event) => {
     setForm(updatedForm)
     dispatch(harcodedForm(updatedForm));
     console.log(updatedForm);
+    Swal.fire({ 
+      icon: 'success',
+      title: 'Congratulations',
+      text: 'You have created a new dog!'})
 /*
   axios.post("http://localhost:3001/dogs",updatedForm)
   .then(res => Swal.fire({ 
